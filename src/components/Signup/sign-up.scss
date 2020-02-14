@@ -1,0 +1,10 @@
+.sign-up {
+  max-width: 500px;
+  margin: 0 auto;
+  &__item {
+    margin-bottom: 12px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

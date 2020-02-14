@@ -1,0 +1,9 @@
+@import 'styles/variables/colors';
+
+.layout {
+  height: 100%;
+  background-color: $bg;
+  &__inner {
+    padding: 0 3%;
+  }
+}

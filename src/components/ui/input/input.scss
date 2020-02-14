@@ -1,0 +1,30 @@
+@import 'styles/variables/colors.scss';
+
+.ui-input__field {
+  width: 100%;
+  padding: 3px 7px;
+  border: 1px solid $input-border;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: 0.2s;
+  color: inherit;
+  &:focus {
+    background-color: #fff;
+    outline: none;
+    border-color: $input-border-focus;
+  }
+  &_full {
+    width: 100%;
+  }
+}
+.input_readonly {
+  background-color: transparent;
+  border-radius: 0;
+  border-color: transparent;
+  cursor: default;
+  &:focus {
+    background-color: transparent;
+    outline: none;
+    border-color: transparent;
+  }
+}

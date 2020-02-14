@@ -1,0 +1,29 @@
+@import "styles/variables.scss";
+.button {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 13px;
+  color: #ffffff;
+  border-radius: 10px;
+  background-color: $main;
+  transition: 0.2s;
+  &:hover,
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 3px 0 $shadow;
+  }
+}
+.button_rounded {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 18px;
+}
+.button_light {
+  background-color: rgba($main, 0.7);
+  &:hover,
+  &:focus {
+    background-color: rgba($main, 1);
+  }
+}

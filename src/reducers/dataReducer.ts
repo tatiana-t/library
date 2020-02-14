@@ -1,8 +1,8 @@
 // import ADD_ITEM from 'src/actions/types';
 
-export default (state = {}, action: any) => {
+export default (state = { state: 'initialState' }, action: any) => {
   switch (action.type) {
-    case 'ADD_ITEM':
+    case 'REGISTER':
       return action.payload;
     default:
       return state;
