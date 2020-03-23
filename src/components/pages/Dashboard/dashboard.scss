@@ -1,0 +1,12 @@
+.dashboard {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  &__list {
+    width: 49%;
+  }
+
+  &__detail {
+    width: 49%;
+  }
+}
