@@ -1,6 +1,6 @@
-import React, {PureComponent} from "react";
-import classnames from "classnames";
-import "./button.scss";
+import React, { PureComponent } from 'react';
+import classnames from 'classnames';
+import './button.scss';
 
 interface Props {
   customClass?: string;

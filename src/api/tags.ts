@@ -6,12 +6,9 @@ export const getTagList = () => {
     .database()
     .ref('/tags')
     .once('value')
-    .then(snapshot => snapshot.val());
+    .then((snapshot) => snapshot.val());
 };
 
-export const addTag = tag => {
-  return firebase
-    .database()
-    .ref('/tags')
-    .push(tag);
+export const addTag = (tag) => {
+  return firebase.database().ref('/tags').push(tag);
 };

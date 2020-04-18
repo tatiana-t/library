@@ -43,7 +43,7 @@ class SignUpPage extends PureComponent<Props, State> {
       passwordTwo: '123',
       error: null,
       login: 'zxcv',
-      password: 'xcvb'
+      password: 'xcvb',
     };
   }
 
@@ -91,7 +91,7 @@ class SignUpPage extends PureComponent<Props, State> {
       passwordTwo: '',
       error: null,
       login: '',
-      password: ''
+      password: '',
     });
   };
   onSubmit = (event: any) => {
@@ -104,7 +104,8 @@ class SignUpPage extends PureComponent<Props, State> {
   };
   setValue = (key: keyof State, value: string) => {
     this.setState(
-      prevState => ({ ...prevState, [key]: value } as Pick<State, keyof State>)
+      (prevState) =>
+        ({ ...prevState, [key]: value } as Pick<State, keyof State>)
     );
   };
   onChange = (name: any, value: any) => {
@@ -141,7 +142,7 @@ const mapStateToProps = (state: any) => {
   console.log(state);
   const { firebase } = state;
   const props = {
-    firebase
+    firebase,
   };
   return props;
 };

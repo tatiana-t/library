@@ -6,7 +6,7 @@ export const getList = () => {
     .database()
     .ref('/books')
     .once('value')
-    .then(snapshot => snapshot.val());
+    .then((snapshot) => snapshot.val());
 };
 export const updateItem = (id, item) => {
   return firebase
@@ -14,12 +14,9 @@ export const updateItem = (id, item) => {
     .ref('books/' + id)
     .set(item);
 };
-export const addItem = item => {
+export const addItem = (item) => {
   console.log(item);
-  firebase
-    .database()
-    .ref('books/')
-    .push(item);
+  firebase.database().ref('books/').push(item);
 };
 // export const deleteItem = id => {
 //   firebase
