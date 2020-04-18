@@ -1,0 +1,26 @@
+@import 'styles/variables/colors';
+
+.flower {
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  border: 10px solid transparent;
+  border-top-color: $weredrobe;
+  border-top-width: 40px;
+  border-bottom: none;
+  filter: drop-shadow(-1px 1px 2px rgba(#000, 0.6));
+  // background-color: #000;
+  &::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    // bottom: 100%;
+    left: -15px;
+    // transform: translateX(50%);
+    width: 40px;
+    border: 3px solid transparent;
+    border-top-color: $weredrobe;
+    border-top-width: 10px;
+    border-bottom: 1px solid rgba(#000, 0.4);
+  }
+}

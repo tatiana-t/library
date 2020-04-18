@@ -1,0 +1,38 @@
+@import 'styles/variables/colors';
+@import 'styles/variables/common';
+
+.cx-tag-list {
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__item {
+    margin-right: 4px;
+    margin-bottom: 2px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &__search {
+    margin-bottom: 4px;
+  }
+  &__field {
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
+  &__wrap {
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in;
+  }
+  &__suggest-list {
+    //height: 0;
+    padding: 4px 0;
+    border: 1px solid rgba($input-border, 0.1);
+    background-color: white;
+    transition: 0.4s;
+  }
+  &__suggest-item {
+    padding: 2px 8px;
+  }
+}

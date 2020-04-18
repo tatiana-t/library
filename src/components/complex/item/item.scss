@@ -1,0 +1,40 @@
+@import 'styles/variables/colors';
+@import 'styles/variables/common';
+
+.item {
+  position: relative;
+  display: block;
+  width: 300px;
+  padding: 4px 12px 4px 12px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 3px -1px rgba($input-border, 0.4);
+  //border-left: 6px solid purple;
+
+  transition: 0.2s;
+  font-size: $font-size;
+
+  &:not(.item_opened):hover {
+    cursor: pointer;
+    background-color: $item-hover;
+  }
+  &_active {
+    background-color: $item-hover;
+  }
+}
+
+.item__title {
+  line-height: 1em;
+  margin-bottom: 3px;
+}
+
+.item__sub {
+  font-size: 12px;
+  font-style: italic;
+  color: $font-light;
+}
+
+.item__subtitle {
+  font-weight: 600;
+  margin-bottom: 3px;
+}
