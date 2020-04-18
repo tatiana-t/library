@@ -25,7 +25,7 @@ class App extends Component<{}, State> {
   constructor(props) {
     super(props);
     this.state = {
-      isAuthenicated: true
+      isAuthenicated: true,
     };
   }
 
@@ -44,7 +44,7 @@ class App extends Component<{}, State> {
               <Route path={ROUTES.SIGN_UP} component={SignUpPage} />*/}
                 <Route
                   path={ROUTES.HOME}
-                  render={props => {
+                  render={(props) => {
                     return <Dashboard {...props} />;
                   }}
                 />

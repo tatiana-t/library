@@ -1,0 +1,61 @@
+@import 'styles/variables/colors';
+@import 'styles/variables/common';
+
+.ui-checkbox {
+  position: relative;
+  &__field {
+    display: none;
+    & + .ui-checkbox__label {
+      position: relative;
+      display: inline-block;
+      min-width: 16px;
+      min-height: 16px;
+      padding-left: 20px;
+      cursor: pointer;
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border-radius: 2px;
+        background-color: white;
+        transition: 0.4s;
+        @include border;
+        &:hover {
+          @include border-hover;
+        }
+      }
+      &::after {
+        content: '';
+        opacity: 0;
+        position: absolute;
+        left: 4px;
+        top: 4px;
+        width: 8px;
+        height: 5px;
+        border: 2px solid rgba($input-border, 0.5);
+        //box-shadow: -1px 1px  2px 0px $input-border;
+        border-top: none;
+        border-right: none;
+        transform: rotate(-50deg);
+        transition: 0.2s;
+      }
+      &:hover {
+        &::before {
+          @include border-hover;
+        }
+      }
+    }
+    &:checked {
+      & + .ui-checkbox__label {
+        &::after {
+          opacity: 1;
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+}

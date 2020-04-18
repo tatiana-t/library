@@ -1,9 +1,17 @@
 import { combineReducers } from 'redux';
-import { list, currentItem } from './dataReducer';
-// import { firebaseReducer } from 'react-redux-firebase';
+import {
+  list,
+  currentItem,
+  setTagList,
+  setAvailableFields,
+  updateFilterFields,
+} from './dataReducer';
 
 export default combineReducers({
-  // firebase: firebaseReducer,
   list,
-  currentItem
+  tags: setTagList,
+  currentItem,
+  setTagList,
+  availableFields: setAvailableFields,
+  filters: updateFilterFields,
 });
