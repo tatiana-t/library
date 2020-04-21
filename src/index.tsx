@@ -16,6 +16,9 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';
 import './index.css';
 
+import 'styles/common/layout.scss';
+import 'styles/common/global.scss';
+
 // const rrfConfig = {
 //   userProfile: 'users'
 //   // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB

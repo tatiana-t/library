@@ -1,32 +1,39 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
+// import { Link } from 'react-router-dom';
+import { getFields } from 'api/fields';
 import Navigation from 'components/complex/navigation';
 // import Login from 'components/Login';
 // import SignUpPage from 'components/Signup';
-import Dashboard from 'components/pages/Dashboard';
+import AppContainer from 'components/pages/appContainer';
+import Settings from 'components/pages/settings';
 // import PasswordForgetPage from '../PasswordForget';
 // import HomePage from '../Home';
 // import AccountPage from '../Account';
 // import AdminPage from '../Admin';
 import * as ROUTES from 'constants/routes';
-// import { getBooks } from 'src/api/firebase';
+import { setAvailableFields } from './actions';
 // import { location } from 'react-router-dom';
-import 'styles/common/layout.scss';
-import 'styles/common/global.scss';
-// const App: React.FC = () => {
-//   return <div>{Firebase}</div>;
-// };
+
+interface Props {
+  dispatch: any;
+  availableFields: any;
+}
 interface State {
   isAuthenicated: boolean;
 }
 
-class App extends Component<{}, State> {
+class App extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
       isAuthenicated: true,
     };
+  }
+  async componentDidMount() {
+    await this.getFields();
   }
 
   render() {
@@ -37,15 +44,22 @@ class App extends Component<{}, State> {
         <div className="layout__inner">
           <Router>
             {!isAuthenicated && <Navigation />}
-            {isAuthenicated && <div className="header">Header</div>}
+            {isAuthenicated && (
+              <div className="header">
+                <Link to={ROUTES.SETTINGS}>Settings</Link>
+              </div>
+            )}
             <div className="layout__main">
               <Switch>
                 {/*<Route exact path={ROUTES.LOGIN} component={Login} />
-              <Route path={ROUTES.SIGN_UP} component={SignUpPage} />*/}
+                <Route path={ROUTES.SIGN_UP} component={SignUpPage} />*/}
+                <Route path={ROUTES.SETTINGS}>
+                  <Settings />
+                </Route>
                 <Route
                   path={ROUTES.HOME}
                   render={(props) => {
-                    return <Dashboard {...props} />;
+                    return <AppContainer {...props} />;
                   }}
                 />
               </Switch>
@@ -55,6 +69,19 @@ class App extends Component<{}, State> {
       </div>
     );
   }
+
+  async getFields() {
+    const { dispatch } = this.props;
+    const fields = await getFields();
+    const fieldsToState = Object.keys(fields).map((field) => ({
+      ...fields[field],
+      id: field,
+    }));
+    dispatch(setAvailableFields(fieldsToState));
+  }
 }
 
-export default App;
+const mapStateToProps = (store) => ({
+  availableFields: store.availableFields,
+});
+export default connect(mapStateToProps)(App);

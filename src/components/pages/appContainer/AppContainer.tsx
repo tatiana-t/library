@@ -11,7 +11,7 @@ import {
 import BookshelfList from 'components/complex/bookshelfList';
 import Detail from 'components/complex/detail';
 import Search from 'components/complex/search';
-import './dashboard.scss';
+import './app-container.scss';
 
 interface Props {
   location?: any;
@@ -31,7 +31,7 @@ interface State {
   tagsToSearch: string[];
 }
 
-class Dashboard extends Component<Props, State> {
+class AppContainer extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -52,22 +52,22 @@ class Dashboard extends Component<Props, State> {
     const { dispatch } = this.props;
     await this.setData();
     await this.setTags();
-    dispatch(setAvailableFields());
+    // dispatch(setAvailableFields());
   }
   render() {
     const { current, search, isCreating, list } = this.state;
 
     return (
-      <div className="dashboard">
-        <div className="dashboard__main">
-          <div className="dashboard__item dashboard__item_search">
+      <div className="app-container">
+        <div className="app-container__main">
+          <div className="app-container__item app-container__item_search">
             <Search
               searchValue={search}
               onChange={this.searchUpdate}
               onTagSearch={this.onTagSearch}
             />
           </div>
-          <div className="dashboard__item dashboard__item_list">
+          <div className="app-container__item app-container__item_list">
             <BookshelfList
               current={current}
               list={list}
@@ -78,7 +78,7 @@ class Dashboard extends Component<Props, State> {
             />
           </div>
 
-          <div className="dashboard__item dashboard__item_detail">
+          <div className="app-container__item app-container__item_detail">
             {(current.name || isCreating) && (
               <Detail
                 item={current}
@@ -202,4 +202,4 @@ const mapStateToProps = ({ list, filters }) => {
   };
 };
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(AppContainer);

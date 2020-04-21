@@ -54,7 +54,9 @@ class Detail extends PureComponent<Props, State> {
             </div>
           )
         )}
-
+        <div className="detail__item">
+          <button onClick={this.addField}>Добавить поле</button>
+        </div>
         <div className="detail__item">
           <button onClick={this.checkBeforeSave}>Save</button>
         </div>
@@ -130,6 +132,7 @@ class Detail extends PureComponent<Props, State> {
       }
     });
   }
+  addField = () => {};
 }
 
 const mapStateToProps = ({ list, tags }) => {
