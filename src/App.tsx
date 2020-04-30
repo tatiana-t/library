@@ -15,7 +15,11 @@ import Settings from 'components/pages/settings';
 // import AdminPage from '../Admin';
 import * as ROUTES from 'constants/routes';
 import { setAvailableFields } from './actions';
+import Header from 'components/complex/header';
 // import { location } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory();
 
 interface Props {
   dispatch: any;
@@ -42,29 +46,25 @@ class App extends Component<Props, State> {
     return (
       <div className="layout">
         <div className="layout__inner">
-          <Router>
-            {!isAuthenicated && <Navigation />}
-            {isAuthenicated && (
-              <div className="header">
-                <Link to={ROUTES.SETTINGS}>Settings</Link>
-              </div>
-            )}
-            <div className="layout__main">
-              <Switch>
-                {/*<Route exact path={ROUTES.LOGIN} component={Login} />
+          {/*<Router>*/}
+          {!isAuthenicated && <Navigation />}
+          {isAuthenicated && <Header />}
+          <div className="layout__main">
+            <Switch>
+              {/*<Route exact path={ROUTES.LOGIN} component={Login} />
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />*/}
-                <Route path={ROUTES.SETTINGS}>
-                  <Settings />
-                </Route>
-                <Route
-                  path={ROUTES.HOME}
-                  render={(props) => {
-                    return <AppContainer {...props} />;
-                  }}
-                />
-              </Switch>
-            </div>
-          </Router>
+              <Route path={ROUTES.SETTINGS}>
+                <Settings />
+              </Route>
+              <Route
+                path={ROUTES.HOME}
+                render={(props) => {
+                  return <AppContainer {...props} />;
+                }}
+              />
+            </Switch>
+          </div>
+          {/*</Router>*/}
         </div>
       </div>
     );
