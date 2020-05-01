@@ -19,9 +19,9 @@ import './index.css';
 import 'styles/common/layout.scss';
 import 'styles/common/global.scss';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
-
-const history = createBrowserHistory();
+// import { createBrowserHistory } from 'history';
+//
+// const history = createBrowserHistory();
 // const rrfConfig = {
 //   userProfile: 'users'
 //   // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
@@ -61,9 +61,10 @@ const composeEnhancers =
 //     reduxDevtools && reduxDevtools(),
 //  );
 
-const store = createStore(reducers, composeEnhancers());
+export const store = createStore(reducers, composeEnhancers());
 
 firebase.initializeApp(fbConfig);
+
 // console.log(firebase.ref);
 // const rrfProps = {
 //   firebase,

@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getList, addItem } from 'api/data';
-import { getTagList } from 'api/tags';
-import {
-  setBookList,
-  setCurrentItem,
-  setTagList,
-  setAvailableFields,
-} from 'actions';
+import { addItem } from 'api/data';
+import { setCurrentItem } from 'actions';
 import BookshelfList from 'components/complex/bookshelfList';
 import Detail from 'components/complex/detail';
 import Search from 'components/complex/search';
@@ -31,7 +25,7 @@ interface State {
   tagsToSearch: string[];
 }
 
-class AppContainer extends Component<Props, State> {
+class Dashboard extends Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
@@ -48,14 +42,19 @@ class AppContainer extends Component<Props, State> {
       tagsToSearch: [],
     };
   }
-  async componentDidMount() {
-    const { dispatch } = this.props;
-    await this.setData();
-    await this.setTags();
-    // dispatch(setAvailableFields());
+
+  componentDidMount(): void {
+    this.setState({ list: this.props.list });
   }
+
+  componentDidUpdate(prevProps): void {
+    if (prevProps.list.length !== this.props.list.length) {
+      this.setState({ list: this.props.list });
+    }
+  }
+
   render() {
-    const { current, search, isCreating, list } = this.state;
+    const { current, search, list, isCreating } = this.state;
 
     return (
       <div className="app-container">
@@ -95,25 +94,6 @@ class AppContainer extends Component<Props, State> {
     );
   }
 
-  async setData() {
-    const { dispatch } = this.props;
-    const list = await getList();
-    const listToState = Object.keys(list).map((item) => ({
-      id: item,
-      ...list[item],
-    }));
-
-    dispatch(setBookList(listToState));
-    this.setState({ list: listToState });
-  }
-
-  async setTags() {
-    const { dispatch } = this.props;
-    const tagList = await getTagList();
-    const tagsToStore = Object.keys(tagList).map((tag) => tagList[tag]);
-    dispatch(setTagList(tagsToStore));
-  }
-
   setCurrent = (id) => {
     const { list, dispatch } = this.props;
     const current = list.find((item) => item.id === id);
@@ -141,7 +121,7 @@ class AppContainer extends Component<Props, State> {
       current: {
         name: 'test Name',
         author: 'test Author',
-        year: '',
+        year: '1654',
         tags: 'tag1, tag2',
       },
     });
@@ -191,6 +171,7 @@ class AppContainer extends Component<Props, State> {
     const filteredList = list.filter((item) =>
       tagList.find((tag) => item.tags.split(', ').includes(tag))
     );
+
     this.setState({ list: filteredList });
   };
 }
@@ -202,4 +183,4 @@ const mapStateToProps = ({ list, filters }) => {
   };
 };
 
-export default connect(mapStateToProps)(AppContainer);
+export default connect(mapStateToProps)(Dashboard);

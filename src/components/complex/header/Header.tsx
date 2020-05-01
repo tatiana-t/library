@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { RouteComponentProps } from 'react-router';
 import Logo from 'components/ui/logo';

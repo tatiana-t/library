@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { updateField } from 'api/fields';
 import Checkbox from 'components/ui/checkbox';
 import Chip from 'components/ui/chip';
 import './settings.scss';
@@ -12,7 +13,6 @@ class Settings extends PureComponent<Props> {
     const { availableFields } = this.props;
     return (
       <div>
-        <div className="">settings</div>
         <div className="settings-page">
           <div className="settings-page__fields">
             <div className="settings-page__all">
@@ -22,7 +22,7 @@ class Settings extends PureComponent<Props> {
                     id={field.id}
                     value={field.default}
                     label={field.title}
-                    onChange={() => {}}
+                    onChange={(id, value) => this.changeField(id, value, field)}
                   />
                 </div>
               ))}
@@ -49,6 +49,10 @@ class Settings extends PureComponent<Props> {
       </div>
     );
   }
+  changeField = (id, value, field) => {
+    console.log(id, value, field);
+    updateField(field.id, { ...field, default: !value });
+  };
 }
 
 const mapStateToProps = (store) => ({
