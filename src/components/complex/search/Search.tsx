@@ -11,14 +11,14 @@ interface Props {
   onChange: (key: string, value: string) => void;
   searchValue: string;
   onTagSearch: (list) => void;
-  availableFields: any;
+  fields: any;
 }
 
 interface State {
   isShowOptions: boolean;
   fields: {
     id: string;
-    text: string;
+    title: string;
     isSelected: boolean;
   }[];
 }
@@ -31,10 +31,12 @@ class Search extends PureComponent<Props, State> {
       fields: [],
     };
   }
+  componentDidMount(): void {
+    this.setFieldsToState();
+  }
+
   componentDidUpdate(prevProps): void {
-    if (
-      this.props.availableFields.length !== prevProps.availableFields.length
-    ) {
+    if (this.props.fields.length !== prevProps.fields.length) {
       this.setFieldsToState();
     }
   }
@@ -55,11 +57,11 @@ class Search extends PureComponent<Props, State> {
         </div>
         <div className="cx-search__item">
           <ul className="cx-search__list">
-            {fields.map(({ id, text, isSelected }) => (
+            {fields.map(({ id, title, isSelected }) => (
               <li className="cx-search__list-item" key={id}>
                 <Checkbox
                   id={id}
-                  label={text}
+                  label={title}
                   value={isSelected}
                   onChange={this.changeField}
                 />
@@ -75,12 +77,14 @@ class Search extends PureComponent<Props, State> {
   }
 
   setFieldsToState = () => {
-    const { availableFields } = this.props;
-    const fields = availableFields.map((item) => ({
+    const { fields } = this.props;
+
+    const fieldsToState = fields.map((item) => ({
       ...item,
       isSelected: false,
     }));
-    this.setState({ fields });
+
+    this.setState({ fields: fieldsToState });
   };
 
   changeField = (id, value) => {
@@ -116,6 +120,6 @@ class Search extends PureComponent<Props, State> {
 }
 
 const mapStateToProps = (store) => ({
-  availableFields: store.availableFields,
+  fields: store.fields,
 });
 export default connect(mapStateToProps)(Search);

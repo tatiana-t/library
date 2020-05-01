@@ -16,6 +16,12 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';
 import './index.css';
 
+import 'styles/common/layout.scss';
+import 'styles/common/global.scss';
+import { BrowserRouter as Router } from 'react-router-dom';
+// import { createBrowserHistory } from 'history';
+//
+// const history = createBrowserHistory();
 // const rrfConfig = {
 //   userProfile: 'users'
 //   // useFirestoreForProfile: true // Firestore for Profile instead of Realtime DB
@@ -55,9 +61,10 @@ const composeEnhancers =
 //     reduxDevtools && reduxDevtools(),
 //  );
 
-const store = createStore(reducers, composeEnhancers());
+export const store = createStore(reducers, composeEnhancers());
 
 firebase.initializeApp(fbConfig);
+
 // console.log(firebase.ref);
 // const rrfProps = {
 //   firebase,
@@ -68,7 +75,9 @@ firebase.initializeApp(fbConfig);
 // store.subscribe(() => console.log(store.getState()));
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </Provider>,
   document.getElementById('root')
 );

@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { addTag } from 'api/tags';
+import { addField } from 'api/fields';
 import { updateItem } from 'api/data';
 import Input from 'components/ui/input';
 import './detail.scss';
@@ -54,7 +55,9 @@ class Detail extends PureComponent<Props, State> {
             </div>
           )
         )}
-
+        <div className="detail__item">
+          <button onClick={() => addField('testField')}>Добавить поле</button>
+        </div>
         <div className="detail__item">
           <button onClick={this.checkBeforeSave}>Save</button>
         </div>
@@ -130,6 +133,9 @@ class Detail extends PureComponent<Props, State> {
       }
     });
   }
+  // addField = (title) => {
+  //   addField();
+  // };
 }
 
 const mapStateToProps = ({ list, tags }) => {

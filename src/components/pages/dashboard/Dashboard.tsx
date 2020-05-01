@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getList, addItem } from 'api/data';
-import { getTagList } from 'api/tags';
-import {
-  setBookList,
-  setCurrentItem,
-  setTagList,
-  setAvailableFields,
-} from 'actions';
+import { addItem } from 'api/data';
+import { setCurrentItem } from 'actions';
 import BookshelfList from 'components/complex/bookshelfList';
 import Detail from 'components/complex/detail';
 import Search from 'components/complex/search';
-import './dashboard.scss';
+import './app-container.scss';
 
 interface Props {
   location?: any;
@@ -48,26 +42,31 @@ class Dashboard extends Component<Props, State> {
       tagsToSearch: [],
     };
   }
-  async componentDidMount() {
-    const { dispatch } = this.props;
-    await this.setData();
-    await this.setTags();
-    dispatch(setAvailableFields());
+
+  componentDidMount(): void {
+    this.setState({ list: this.props.list });
   }
+
+  componentDidUpdate(prevProps): void {
+    if (prevProps.list.length !== this.props.list.length) {
+      this.setState({ list: this.props.list });
+    }
+  }
+
   render() {
-    const { current, search, isCreating, list } = this.state;
+    const { current, search, list, isCreating } = this.state;
 
     return (
-      <div className="dashboard">
-        <div className="dashboard__main">
-          <div className="dashboard__item dashboard__item_search">
+      <div className="app-container">
+        <div className="app-container__main">
+          <div className="app-container__item app-container__item_search">
             <Search
               searchValue={search}
               onChange={this.searchUpdate}
               onTagSearch={this.onTagSearch}
             />
           </div>
-          <div className="dashboard__item dashboard__item_list">
+          <div className="app-container__item app-container__item_list">
             <BookshelfList
               current={current}
               list={list}
@@ -78,7 +77,7 @@ class Dashboard extends Component<Props, State> {
             />
           </div>
 
-          <div className="dashboard__item dashboard__item_detail">
+          <div className="app-container__item app-container__item_detail">
             {(current.name || isCreating) && (
               <Detail
                 item={current}
@@ -93,25 +92,6 @@ class Dashboard extends Component<Props, State> {
         </div>
       </div>
     );
-  }
-
-  async setData() {
-    const { dispatch } = this.props;
-    const list = await getList();
-    const listToState = Object.keys(list).map((item) => ({
-      id: item,
-      ...list[item],
-    }));
-
-    dispatch(setBookList(listToState));
-    this.setState({ list: listToState });
-  }
-
-  async setTags() {
-    const { dispatch } = this.props;
-    const tagList = await getTagList();
-    const tagsToStore = Object.keys(tagList).map((tag) => tagList[tag]);
-    dispatch(setTagList(tagsToStore));
   }
 
   setCurrent = (id) => {
@@ -141,7 +121,7 @@ class Dashboard extends Component<Props, State> {
       current: {
         name: 'test Name',
         author: 'test Author',
-        year: '',
+        year: '1654',
         tags: 'tag1, tag2',
       },
     });
@@ -191,6 +171,7 @@ class Dashboard extends Component<Props, State> {
     const filteredList = list.filter((item) =>
       tagList.find((tag) => item.tags.split(', ').includes(tag))
     );
+
     this.setState({ list: filteredList });
   };
 }

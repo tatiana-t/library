@@ -81,13 +81,13 @@ class TagList extends PureComponent<Props, State> {
 
   setListToState = (checkedList?) => {
     const { list } = this.props;
-    // const listTo = checkedList ? checkedList : list;
-    // console.log(checkedList);
+
     const listToState = list.map((item) => ({
       id: item,
       text: item,
       isActive: this.setActive(checkedList, item),
     }));
+
     this.setState({ list: listToState });
   };
 
@@ -102,12 +102,14 @@ class TagList extends PureComponent<Props, State> {
   onSelect = (id) => {
     const { onSelectItem } = this.props;
     const { list } = this.state;
+
     const newList = list.map((item) => {
       if (item.id === id) {
         return { ...item, isActive: !item.isActive };
       }
       return item;
     });
+
     const stringToSearch = newList.reduce(
       (result: string[], item): string[] => {
         if (item.isActive) {
@@ -131,21 +133,6 @@ class TagList extends PureComponent<Props, State> {
     const suggestList = list.filter(({ text }) => text.indexOf(value) > -1);
 
     this.setState({ list: suggestList, searchTagInput: value });
-  };
-
-  setSuggestListHeight = () => {
-    // console.log(this.suggestListEl);
-    interface nodeItem {
-      offsetHeight: number;
-    }
-    if (this.suggestListEl) {
-      // console.log(this.suggestListEl.childNodes);
-      // const suggestListHeight = this.suggestListEl.offsetHeight;
-      // let suggestListHeight = 0;
-      // this.setState({ suggestListHeight });
-      // return height;
-    }
-    return 0;
   };
 }
 const mapStateToProps = ({ tags }) => ({

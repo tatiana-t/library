@@ -5,7 +5,7 @@ interface Props {}
 
 class Flower extends PureComponent<Props> {
   static defaultProps = {
-    isShowRemove: true
+    isShowRemove: true,
   };
   render() {
     return <div className="flower"></div>;

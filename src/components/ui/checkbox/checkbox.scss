@@ -4,7 +4,8 @@
 .ui-checkbox {
   position: relative;
   &__field {
-    display: none;
+    opacity: 0;
+    position: absolute;
     & + .ui-checkbox__label {
       position: relative;
       display: inline-block;

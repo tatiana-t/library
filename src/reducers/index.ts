@@ -1,17 +1,12 @@
 import { combineReducers } from 'redux';
-import {
-  list,
-  currentItem,
-  setTagList,
-  setAvailableFields,
-  updateFilterFields,
-} from './dataReducer';
+import { list, currentItem } from './data';
+import { setAvailableFields, updateFilterFields } from './fields';
+import { setTagList } from './tags';
 
 export default combineReducers({
   list,
   tags: setTagList,
   currentItem,
-  setTagList,
-  availableFields: setAvailableFields,
+  fields: setAvailableFields,
   filters: updateFilterFields,
 });
