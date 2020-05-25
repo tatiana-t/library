@@ -14,16 +14,6 @@ export const getFields = () => {
     }));
     store.dispatch(setAvailableFields(fieldsToState));
   });
-
-  // fieldList = db.once('value').then((snapshot) => {
-  //   fieldList = snapshot.val();
-  //   const fieldsToState = Object.keys(fieldList).map((item) => ({
-  //     id: item,
-  //     ...fieldList[item],
-  //   }));
-
-  // store.dispatch(setAvailableFields(fieldsToState));
-  // });
 };
 
 export const addField = (field) => {
@@ -31,10 +21,9 @@ export const addField = (field) => {
   let newRef;
   try {
     newRef = ref.push();
-    console.log(newRef);
   } finally {
     const newItem = {
-      title: field,
+      ...field,
       id: newRef && newRef.key,
     };
     newRef.set(newItem);
@@ -44,6 +33,6 @@ export const addField = (field) => {
 export const updateField = (id, field) => {
   return firebase
     .database()
-    .ref('availableFields/' + id)
+    .ref('fields/' + id)
     .set(field);
 };

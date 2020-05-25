@@ -1,148 +1,120 @@
 import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { addTag } from 'api/tags';
-import { addField } from 'api/fields';
-import { updateItem } from 'api/data';
+
+import { updateField } from 'api/fields';
+import Field from 'interfaces/fields';
 import Input from 'components/ui/input';
+import Checkbox from 'components/ui/checkbox';
+import Button from 'components/ui/button';
 import './detail.scss';
 
 interface Props {
-  item?: any;
-  dispatch: any;
-  list?: any;
-  tags: any;
-  onChange: (key, value) => void;
-  saveItem: (item: any) => void;
-}
-interface State {
+  tags?: any;
+  fields: any;
+  isCreating: boolean;
   errors: any;
+  currentItem: any;
+  changeVal: (name: string, val: string) => void;
+  onChangeNewField: (name: string, val: string | boolean) => void;
+  checkBeforeSave: (item) => void;
+  setNewField: () => void;
+  addField: (field) => void;
+  newField: Field;
 }
-class Detail extends PureComponent<Props, State> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: {
-        isError: false,
-        name: {
-          isError: false,
-          value: 'а название какое?',
-        },
-        author: {
-          isError: false,
-          value: 'кто автор?',
-        },
-      },
-    };
-  }
+
+class Detail extends PureComponent<Props> {
   render() {
     // console.log(this.props);
-    const { item } = this.props;
-    const { errors } = this.state;
+    const {
+      fields,
+      errors,
+      changeVal,
+      isCreating,
+      currentItem,
+      newField,
+      addField,
+      checkBeforeSave,
+      setNewField,
+      onChangeNewField,
+    } = this.props;
+
     return (
       <div className="detail">
-        {Object.keys(item).map((key) =>
-          key === 'id' ? null : (
-            <div className="detail__item" key={key}>
-              <Input
-                name={key}
-                onChange={this.changeVal}
-                value={item[key]}
-                label={key}
-              />
-              {errors[key] && errors[key].isError && (
-                <span>{errors[key].value}</span>
-              )}
-            </div>
-          )
+        {isCreating
+          ? Object.keys(currentItem).map((field) => {
+              console.log('field', field);
+              return (
+                <div className="detail__item" key={field}>
+                  <Input
+                    name={field}
+                    onChange={changeVal}
+                    value={currentItem[field]}
+                    label={
+                      fields.find((itemField) => field === itemField.id).label
+                    }
+                  />
+                  {errors[field] && errors[field].isError && (
+                    <span>{errors[field].value}</span>
+                  )}
+                </div>
+              );
+            })
+          : Object.keys(currentItem).map((itemField) => {
+              if (itemField !== 'id') {
+                return (
+                  <div className="detail__item" key={itemField}>
+                    <Input
+                      name={fields.find((field) => field.id === itemField).id}
+                      onChange={changeVal}
+                      value={currentItem[itemField]}
+                      label={
+                        fields.find((field) => field.id === itemField).label
+                      }
+                    />
+                    {errors[itemField] && errors[itemField].isError && (
+                      <span>{errors[itemField].value}</span>
+                    )}
+                  </div>
+                );
+              } else {
+                return null;
+              }
+            })}
+
+        {newField.id && (
+          <div className="detail__item">
+            <Checkbox
+              id="newField"
+              value={newField.default}
+              onChange={(id, value) => onChangeNewField('default', !value)}
+              label="is this field is default field?"
+            />
+
+            <Input
+              name="label"
+              onChange={onChangeNewField}
+              value={newField.label}
+              label="new field name"
+            />
+            <Button text="ready!" onClick={setNewField} />
+          </div>
         )}
         <div className="detail__item">
-          <button onClick={() => addField('testField')}>Добавить поле</button>
+          <button onClick={addField}>Добавить поле</button>
         </div>
         <div className="detail__item">
-          <button onClick={this.checkBeforeSave}>Save</button>
+          <button onClick={checkBeforeSave}>Save</button>
         </div>
       </div>
     );
   }
 
-  getListToRender = () => {
-    //TODO: динамическая отрисовка полей. возможность кастомизирования набора полей
+  setNewField = (id, value) => {
+    // updateField(id, value);
   };
-  changeVal = (name, value) => {
-    const { onChange } = this.props;
-    // const {
-    //   errors,
-    //   errors: { isError },
-    // } = this.state;
-
-    onChange(name, value);
-    setTimeout(this.turnOffErrors);
-  };
-  turnOffErrors = () => {
-    const { item } = this.props;
-    const { errors } = this.state;
-    const newErrors = Object.assign({}, errors);
-    if (item.name) {
-      newErrors.name.isError = false;
-    }
-    if (item.author) {
-      newErrors.author.isError = false;
-    }
-    this.setState({
-      errors: newErrors,
-    });
-  };
-  checkBeforeSave = () => {
-    const { errors } = this.state;
-    const { saveItem, item } = this.props;
-    const newErrors = Object.assign({}, errors);
-
-    if (!item.name) {
-      newErrors.name.isError = true;
-    } else {
-      newErrors.name.isError = false;
-    }
-    if (!item.author) {
-      newErrors.author.isError = true;
-    } else {
-      newErrors.author.isError = false;
-    }
-
-    this.setState({
-      errors: newErrors,
-    });
-    if (item.tags) {
-      this.parseTags(item.tags);
-    }
-
-    if (!newErrors.name.isError && !newErrors.author.isError) {
-      if (item.id) {
-        updateItem(item.id, item);
-      } else {
-        saveItem(item);
-      }
-    }
-  };
-  async parseTags(tagsToAdd) {
-    const { tags } = this.props;
-    // console.log(typeof availableTags);
-    tagsToAdd.split(', ').forEach((tag) => {
-      if (!tags.includes(tag)) {
-        //action to push tag to the db
-        addTag(tag);
-      }
-    });
-  }
-  // addField = (title) => {
-  //   addField();
+  // addField = (filed) => {
+  //   const { addField } = this.props;
+  //   this.setState({ isAddField: true });
+  //   addField(filed);
   // };
 }
-
-const mapStateToProps = ({ list, tags }) => {
-  return {
-    list,
-    tags,
-  };
-};
-
-export default connect(mapStateToProps)(Detail);
+export default Detail;

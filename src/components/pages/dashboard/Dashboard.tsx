@@ -14,6 +14,7 @@ interface Props {
   dispatch: any;
   list: any[];
   filters: string[];
+  fields: any;
   // current: any;
 }
 
@@ -48,7 +49,7 @@ class Dashboard extends Component<Props, State> {
   }
 
   componentDidUpdate(prevProps): void {
-    if (prevProps.list.length !== this.props.list.length) {
+    if (prevProps.list !== this.props.list) {
       this.setState({ list: this.props.list });
     }
   }
@@ -78,13 +79,7 @@ class Dashboard extends Component<Props, State> {
           </div>
 
           <div className="app-container__item app-container__item_detail">
-            {(current.name || isCreating) && (
-              <Detail
-                item={current}
-                onChange={this.setNewItem}
-                saveItem={this.saveItem}
-              />
-            )}
+            {(current.name || isCreating) && <Detail isCreating={isCreating} />}
           </div>
         </div>
         <div className="detail__btn">
@@ -99,36 +94,43 @@ class Dashboard extends Component<Props, State> {
     const current = list.find((item) => item.id === id);
 
     this.setState({
+      isCreating: false,
       current,
     });
     dispatch(setCurrentItem(current));
   };
 
-  setNewItem = (key, value) => {
-    const { current } = this.state;
-    // console.log(key, value, newItem);
-    this.setState({
-      current: {
-        ...current,
-        [key]: value,
-      },
-    });
-  };
+  // setNewItem = (key, value) => {
+  //   const { current } = this.state;
+  //   // console.log(key, value, newItem);
+  //   this.setState({
+  //     current: {
+  //       ...current,
+  //       [key]: value,
+  //     },
+  //   });
+  // };
 
   onAddItem = () => {
+    const { fields, dispatch } = this.props;
     this.setState({
       isCreating: true,
-      current: {
-        name: 'test Name',
-        author: 'test Author',
-        year: '1654',
-        tags: 'tag1, tag2',
-      },
     });
+    const currentItem = fields.reduce((result, field) => {
+      if (field.default) {
+        return { ...result, [field.id]: '' };
+      }
+      return result;
+    }, {});
+    this.setState({
+      isCreating: true,
+    });
+
+    dispatch(setCurrentItem(currentItem));
   };
 
   saveItem = (item) => {
-    addItem(item);
+    // addItem(item);
   };
 
   searchUpdate = (key, value) => {
@@ -176,10 +178,11 @@ class Dashboard extends Component<Props, State> {
   };
 }
 
-const mapStateToProps = ({ list, filters }) => {
+const mapStateToProps = ({ list, filters, fields }) => {
   return {
     list,
     filters,
+    fields,
   };
 };
 

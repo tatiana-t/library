@@ -64,8 +64,7 @@ class Input extends PureComponent<Props, State> {
     const { onChange } = this.props;
     const value = e.target.value;
     const name = e.target.name;
-    this.setState({ value });
-    onChange(name, value);
+    this.setState({ value }, () => onChange(name, value));
   };
 }
 

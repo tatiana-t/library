@@ -13,7 +13,7 @@ export const getList = () => {
       ...list[item],
     }));
 
-    // console.log('on value');
+    // console.log('on value', listToState);
     store.dispatch(setBookList(listToState));
   });
   //

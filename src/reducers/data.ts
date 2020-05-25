@@ -12,7 +12,7 @@ export const list = (state = [], action: any) => {
 export const currentItem = (state = {}, action: any) => {
   switch (action.type) {
     case 'SET_CURRENT_ITEM':
-      return { ...state, ...action.payload };
+      return { ...action.payload };
     default:
       return state;
   }

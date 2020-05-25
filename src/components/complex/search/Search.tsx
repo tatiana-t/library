@@ -18,7 +18,7 @@ interface State {
   isShowOptions: boolean;
   fields: {
     id: string;
-    title: string;
+    label: string;
     isSelected: boolean;
   }[];
 }
@@ -57,16 +57,19 @@ class Search extends PureComponent<Props, State> {
         </div>
         <div className="cx-search__item">
           <ul className="cx-search__list">
-            {fields.map(({ id, title, isSelected }) => (
-              <li className="cx-search__list-item" key={id}>
-                <Checkbox
-                  id={id}
-                  label={title}
-                  value={isSelected}
-                  onChange={this.changeField}
-                />
-              </li>
-            ))}
+            {fields.map(
+              ({ id, label, isSelected }) =>
+                id !== 'tags' && (
+                  <li className="cx-search__list-item" key={id}>
+                    <Checkbox
+                      id={id}
+                      label={label}
+                      value={isSelected}
+                      onChange={this.changeField}
+                    />
+                  </li>
+                )
+            )}
           </ul>
         </div>
         <div className="cx-search__item">
