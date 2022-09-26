@@ -1,0 +1,32 @@
+@import 'styles/variables/colors';
+
+.layout {
+  height: 100%;
+  background-color: $bg;
+  //background-image: repeating-linear-gradient(
+  //    303deg,
+  //    transparent 50px,
+  //    rgba($light, 0.1) 52px,
+  //    transparent 53px,
+  //    transparent 58px
+  //  ),
+  //  repeating-linear-gradient(
+  //    -303deg,
+  //    transparent 50px,
+  //    rgba($light, 0.1) 52px,
+  //    transparent 53px,
+  //    transparent 58px
+  //  );
+  &__inner {
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 3% 0 10px;
+  }
+  &__main {
+    // max-height: 95%; // calc(100vh - 50px);
+    flex-grow: 1;
+    // margin-top: auto;
+  }
+}

@@ -1,0 +1,58 @@
+@import 'styles/variables/colors.scss';
+@import 'styles/variables/common';
+
+.ui-input {
+  display: inline-block;
+  width: 100%;
+  &__field {
+    display: inline-block;
+    width: 100%;
+    max-width: 100%;
+    padding: 3px 7px;
+    @include border;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.8);
+    transition: 0.2s;
+    color: inherit;
+    &:focus {
+      outline: none;
+      background-color: #fff;
+      @include border-hover;
+    }
+    &_full {
+      width: 100%;
+    }
+  }
+  &_readonly {
+    background-color: transparent;
+    border-radius: 0;
+    border-color: transparent;
+    cursor: default;
+    &:focus {
+      background-color: transparent;
+      outline: none;
+      border-color: transparent;
+    }
+  }
+  &_underline {
+    .ui-input__field {
+      border: none;
+      // color: #fff;
+      border-bottom: 4px solid #150802;
+      border-radius: 0;
+      background-color: transparent;
+    }
+  }
+  &_error {
+    .ui-input__field {
+      //border-color: $input-border-error;
+      //box-shadow: 0 0 1px 1px $input-border-error;
+      box-shadow: 0 0 2px -1px $input-border-error,
+        inset 0 0 4px -1px $input-border-error;
+      &:focus {
+        box-shadow: 0 0 3px -1px $input-border-error,
+          inset 0 0 5px -1px $input-border-error;
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+.header {
+  padding: 8px 16px;
+  display: flex;
+  align-items: baseline;
+  &__item {
+    display: inline-block;
+    margin-right: 8px;
+    &:last-child {
+      margin-right: 0;
+    }
+    &_logo {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      //border: 2px solid;
+      text-align: center;
+    }
+  }
+}
